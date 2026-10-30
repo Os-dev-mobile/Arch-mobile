@@ -1,3 +1,9 @@
+The files available are not functional yet
+
+
+
+
+
 Arch-Mobile: Manual Live RAM-Boot Guide for Motorola Moto G84 (bangkk)
 
     DISCLAIMER: This guide involves unlocking the bootloader, executing manual partition backups, and live RAM-boot injection. This process carries inherent risks, including potential data loss or soft-bricking if performed incorrectly. Neither the author nor contributors are responsible for any damage to your device. Proceed entirely at your own risk.
