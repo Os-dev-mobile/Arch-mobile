@@ -1,0 +1,33 @@
+#!/bin/busybox sh
+
+# 1. Mount essential kernel virtual filesystems
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mount -t configfs configfs /sys/kernel/config 2>/dev/null
+
+echo "============================================="
+echo "   ARCH-MOBILE: Stage-1 Init Initialized    "
+echo "============================================="
+
+# 2. Populate BusyBox symlinks if not already linked
+/bin/busybox --install -s /bin
+
+# 3. Brief diagnostic check
+echo "[INFO] Kernel architecture: $(uname -m)"
+echo "[INFO] Available memory:"
+free -m
+
+echo "============================================="
+echo "   Handing off to Arch Linux Userland...     "
+echo "============================================="
+
+# 4. Pivot or execute initial systemd / rescue shell
+if [ -x /sbin/init ]; then
+    exec /sbin/init
+elif [ -x /usr/lib/systemd/systemd ]; then
+    exec /usr/lib/systemd/systemd
+else
+    echo "[WARNING] Systemd init not found, dropping to rescue shell."
+    exec /bin/sh
+fi
